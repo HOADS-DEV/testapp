@@ -97,8 +97,17 @@ document.addEventListener('DOMContentLoaded', () => {
             subsOptions.classList.remove('hidden');
             renderSubtitleList();
 
-            // Start overlay updates
-            subtitleOverlay.classList.add('style-classic');
+            // Apply default style
+            subtitleOverlay.className = 'subtitle-overlay style-classic';
+
+            // Flash the first subtitle as a preview
+            subtitleOverlay.textContent = subtitles[0].text;
+            subtitleOverlay.classList.add('visible');
+            setTimeout(() => {
+                if (videoPlayer.paused) {
+                    subtitleOverlay.classList.remove('visible');
+                }
+            }, 3000);
 
         } catch (err) {
             console.error('Subtitle generation failed:', err);
