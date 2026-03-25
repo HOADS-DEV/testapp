@@ -165,9 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
         subtitleOverlay.style.color = subsColor.value;
     });
 
-    // ── Update subtitle overlay on timeupdate ────
-    videoPlayer.addEventListener('timeupdate', () => {
-        if (!subtitles.length || !showSubsToggle.checked) return;
+    // ── Update subtitle overlay ────────────────────
+    function updateSubtitleOverlay() {
+        if (!subtitles.length || !showSubsToggle.checked) {
+            subtitleOverlay.classList.remove('visible');
+            return;
+        }
 
         const t = videoPlayer.currentTime;
         const active = subtitles.find(s => t >= s.start && t <= s.end);
@@ -178,7 +181,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             subtitleOverlay.classList.remove('visible');
         }
-    });
+    }
+
+    videoPlayer.addEventListener('timeupdate', updateSubtitleOverlay);
+    videoPlayer.addEventListener('seeked', updateSubtitleOverlay);
+    videoPlayer.addEventListener('play', updateSubtitleOverlay);
 
     // ── Expose subtitles for generate step ───────
     window.getSubtitles = () => subtitles;

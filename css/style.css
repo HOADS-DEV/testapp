@@ -492,6 +492,7 @@ body {
 /* ── Video Container (for subtitle overlay) ───── */
 .video-container {
     position: relative;
+    isolation: isolate;
 }
 
 .video-container video {
@@ -500,6 +501,8 @@ body {
     background: #000;
     aspect-ratio: 16/9;
     object-fit: contain;
+    position: relative;
+    z-index: 1;
 }
 
 .subtitle-overlay {
@@ -510,6 +513,7 @@ body {
     text-align: center;
     pointer-events: none;
     width: 90%;
+    z-index: 10;
     font-size: 1.3rem;
     font-weight: 700;
     line-height: 1.4;
